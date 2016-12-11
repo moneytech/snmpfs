@@ -1,0 +1,57 @@
+#--------------------------------
+# SNMP file system configuration
+#--------------------------------
+
+daemon:
+{
+  uid = "snmp-usr";
+  gid = "snmp-grp";
+  trap-port = 162;
+  engine-id = "0xAABBCCDDEEFF";
+  mount-dir = "@SNMP_MOUNT_DIR@";
+  cache-dir = "@SNMP_CACHE_DIR@";
+  mib-dir = "@SNMP_MIB_DIR@";
+};
+
+agents = (
+  {
+    alias = "demo-snmplab";
+    address = "demo.snmplabs.com";
+    port = 161;
+    version = 3;
+    context-engine-id = "0x80004fb805636c6f75644dab22cc";
+    security:
+    {
+      model = "USM";
+      level = "authPriv";
+      name = "usr-sha-aes256";
+      engine-id = "0x80004fb805636c6f75644dab22cc";
+      auth-algo = "SHA2-256";
+      priv-algo = "AES256";
+      auth-password = "authkey1";
+      priv-password = "privkey1";
+    };
+  },
+  {
+    alias = "openwrt-test";
+    address = "fe80::123";
+    port = 161;
+    version = 3;
+    context-engine-id = "0xAABBCCDDEEFF";
+    context-name = "test";
+    retries = 3;
+    timeout = 2;
+    security:
+    {
+      model = "USM";
+      level = "noAuthNoPriv";
+      name = "private";
+      engine-id = "0xAABBCCDDEEFF";
+      auth-algo = "SHA1";
+      priv-algo = "AES128";
+      auth-key = "0x00112233445566778899AABBCCDDEEFF00112233";
+      priv-key = "0x00112233445566778899AABBCCDDEEFF";
+    };
+  }
+);
+

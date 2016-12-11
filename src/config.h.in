@@ -1,0 +1,109 @@
+/*
+ * This file is part of the snmpfs project (https://github.com/verrio/snmpfs).
+ * See LICENSE file for copyright and license details.
+ */
+
+#ifndef SRC_CONFIG_H_
+#define SRC_CONFIG_H_
+
+#include "common.h"
+
+#include "snmpfs.h"
+
+#define PACKAGE_NAME "snmpfs"
+#define PACKAGE_VERSION "@SNMP_PACKAGE_VERSION@"
+
+#define ENTERPRISE_NUMBER 4
+
+/* default config file location */
+#define CONFIG_FILE "@SNMP_CONF_DIR@/snmpfs.conf"
+
+/* default mount point */
+#define MOUNT_DIR "@SNMP_MOUNT_DIR@"
+
+/* default cache dir */
+#define CACHE_DIR "@SNMP_CACHE_DIR@"
+
+/* default MIB definition files dir */
+#define MIB_DIR "@SNMP_MIB_DIR@"
+
+/* run path */
+#define RUN_DIR "/run/snmp"
+
+/* default trap port */
+#define TRAP_PORT   162
+
+/* default retries */
+#define REQ_RETRIES   3
+
+/* default timeout */
+#define REQ_TIMEOUT   4
+
+/**
+ * set_config_file - Update config file path.
+ *
+ * @param path IN - new config file path
+ */
+void set_config_file(const char *path);
+
+/**
+ * reload_config - Reload the configuration from disk.
+ *
+ * @param agents IN/OUT - list containing the current agent configuration
+ *
+ * @return 0 on success, -1 on error.
+ */
+int reload_config(AgentList *agents);
+
+/**
+ * get_uid - Returns the daemon user ID.
+ *
+ * @return daemon user uid (0 if not set).
+ */
+int get_uid(void);
+
+/**
+ * get_gid - Returns the daemon group ID.
+ *
+ * @return daemon group gid (0 if not set).
+ */
+int get_gid(void);
+
+/**
+ * get_mount_dir - Returns the FUSE mount path.
+ *
+ * @return file system mount path.
+ */
+char *get_mount_dir(void);
+
+/**
+ * get_cache_dir - Returns the cache path.
+ *
+ * @return cache path.
+ */
+char *get_cache_dir(void);
+
+/**
+ * get_mib_dir - Returns the path to the MIB definition files.
+ *
+ * @return MIB definition file path.
+ */
+char *get_mib_dir(void);
+
+/**
+ * get_trap_port - Returns the bind port for incoming SNMP traps.
+ *
+ * @return SNMP trap port.
+ */
+uint16_t get_trap_port(void);
+
+/**
+ * get_engine_id - Returns the system's engine ID.
+ *
+ * @param dst OUT - destination to which the engine ID will be written
+ *
+ * @return engine ID length.
+ */
+size_t get_engine_id(uint8_t **dst);
+
+#endif /* SRC_CONFIG_H_ */

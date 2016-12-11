@@ -1,0 +1,10 @@
+.cproject
+.settings
+.project
+core
+snmpfs
+snmpfs.8
+snmpfs.conf
+src/config.h
+src/*.d
+src/*.o
